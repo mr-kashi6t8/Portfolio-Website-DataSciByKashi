@@ -354,9 +354,9 @@ This project is created for **M. Kashif Sultan**. Feel free to use this as a tem
 ## 📞 Contact
 
 **M. Kashif Sultan**
-- **Email**: your.email@gmail.com
-- **LinkedIn**: [Your LinkedIn Profile]
-- **GitHub**: [Your GitHub Profile]
+- **Email**: mk695870@gmail.com
+- **LinkedIn**: []
+- **GitHub**: [https://github.com/mr-kashi6t8]
 - **University**: COMSATS University Islamabad, Sahiwal Campus
 
 ---
