@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { blogPosts } from '@/lib/data/blog-posts';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://yourwebsite.com'; // Replace with your actual domain
+  const baseUrl = 'https://datascibykashi.vercel.app';
   
   // Static pages
   const staticPages = [

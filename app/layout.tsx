@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://yourwebsite.com',
+    url: 'https://datascibykashi.vercel.app',
     siteName: 'Kashif Sultan Portfolio',
     title: 'M. Kashif Sultan | Data Scientist & ML Engineer',
     description: 'Transforming data into actionable insights through AI, Machine Learning, and Interactive Dashboards.',
