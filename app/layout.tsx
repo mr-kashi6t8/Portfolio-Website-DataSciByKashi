@@ -58,6 +58,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="smooth-scroll">
+      <head>
+        <meta name="google-site-verification" content="tvf3CoI7JuDuugYc8jxsZTHVdFUpFip6gt25iOUbZ7E" />
+      </head>
       <body className={inter.className}>
         <div className="flex flex-col min-h-screen">
           <Header />
