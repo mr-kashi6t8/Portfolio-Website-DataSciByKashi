@@ -60,6 +60,9 @@ export default function RootLayout({
     <html lang="en" className="smooth-scroll">
       <head>
         <meta name="google-site-verification" content="tvf3CoI7JuDuugYc8jxsZTHVdFUpFip6gt25iOUbZ7E" />
+        <title>DataSciByKashi | Muhammad Kashif Sultan - Data Scientist</title>
+      <meta name="description" content="Portfolio of Muhammad Kashif Sultan showcasing Data Science, Machine Learning, and AI projects." />
+
       </head>
       <body className={inter.className}>
         <div className="flex flex-col min-h-screen">
