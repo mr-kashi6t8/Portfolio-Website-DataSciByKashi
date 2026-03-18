@@ -107,9 +107,8 @@ export default function ReviewsPage() {
               </motion.div>
 
               <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.3 }}
+                initial="visible"
+                animate="visible"
                 variants={staggerContainer}
                 className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
               >
