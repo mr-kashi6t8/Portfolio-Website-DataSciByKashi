@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { Metadata } from 'next';
 import { motion } from 'framer-motion';
 import { Star, Send } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
@@ -9,6 +10,26 @@ import { Badge } from '@/components/ui/Badge';
 import { getApprovedReviews } from '@/lib/data/reviews';
 import { fadeIn, staggerContainer, staggerItem } from '@/lib/utils/animations';
 import ReviewForm from '@/components/reviews/ReviewForm';
+
+export const metadata: Metadata = {
+  title: 'Client Reviews & Testimonials - Data Science Services',
+  description: 'Read verified client reviews and testimonials about M. Kashif Sultan\'s Data Science, Machine Learning, and AI consulting services. See real feedback from satisfied clients.',
+  keywords: ['client reviews', 'testimonials', 'data science services', 'machine learning consulting', 'verified reviews'],
+  openGraph: {
+    title: 'Client Reviews - DataSciByKashi',
+    description: 'Verified client testimonials and reviews for Data Science and Machine Learning services.',
+    type: 'website',
+    url: 'https://datascibykashi.vercel.app/reviews',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Client Reviews and Testimonials',
+      },
+    ],
+  },
+};
 
 export default function ReviewsPage() {
   const approvedReviews = getApprovedReviews();
@@ -111,7 +132,7 @@ export default function ReviewsPage() {
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.3 }}
                 variants={staggerContainer}
-                className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
               >
                 {approvedReviews.map((review) => (
                   <motion.div key={review.id} variants={staggerItem}>

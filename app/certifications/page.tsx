@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { Metadata } from 'next';
 import { motion } from 'framer-motion';
 import { Download, ExternalLink } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
@@ -8,6 +9,26 @@ import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { getAllCertifications, getFeaturedCertifications } from '@/lib/data/certifications';
 import { fadeIn, staggerContainer, staggerItem } from '@/lib/utils/animations';
+
+export const metadata: Metadata = {
+  title: 'Certifications & Credentials - Data Science Professional',
+  description: 'Explore M. Kashif Sultan\'s professional certifications in Data Science, Machine Learning, and AI from top platforms like Coursera and CertNexus. Verified credentials showcasing expertise.',
+  keywords: ['certifications', 'data science', 'machine learning', 'coursera', 'professional credentials', 'verifiable certificates'],
+  openGraph: {
+    title: 'Professional Certifications - DataSciByKashi',
+    description: 'Verified certifications and credentials in Data Science, Machine Learning, and AI.',
+    type: 'website',
+    url: 'https://datascibykashi.vercel.app/certifications',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Professional Certifications',
+      },
+    ],
+  },
+};
 
 export default function CertificationsPage() {
   const allCertifications = getAllCertifications();
@@ -55,7 +76,7 @@ export default function CertificationsPage() {
               whileInView="visible"
               viewport={{ once: true, amount: 0.3 }}
               variants={staggerContainer}
-              className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
             >
               {featuredCertifications.map((cert) => (
                 <motion.div key={cert.id} variants={staggerItem}>
