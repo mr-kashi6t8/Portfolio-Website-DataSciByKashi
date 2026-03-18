@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   keywords: ['Data Science', 'Machine Learning', 'Python', 'Streamlit', 'Data Analysis', 'Kashif Sultan'],
   authors: [{ name: 'M. Kashif Sultan' }],
   creator: 'M. Kashif Sultan',
-  icon: '/favicon.png',
+  icons: '/favicon.png',
   openGraph: {
     type: 'website',
     locale: 'en_US',
