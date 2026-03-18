@@ -4,6 +4,21 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Certifications & Credentials - Data Science Professional',
   description: 'Explore M. Kashif Sultan\'s professional certifications in Data Science, Machine Learning, and AI from top platforms like Coursera and CertNexus. Verified credentials showcasing expertise.',
+  keywords: ['certifications', 'data science', 'machine learning', 'coursera', 'professional credentials', 'verifiable certificates'],
+  openGraph: {
+    title: 'Professional Certifications - DataSciByKashi',
+    description: 'Verified certifications and credentials in Data Science, Machine Learning, and AI.',
+    type: 'website',
+    url: 'https://datascibykashi.vercel.app/certifications',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Professional Certifications',
+      },
+    ],
+  },
 };
 
 // Add structured data for certifications

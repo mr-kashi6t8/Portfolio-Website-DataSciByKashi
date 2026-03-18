@@ -4,6 +4,21 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Client Reviews & Testimonials - Data Science Services',
   description: 'Read verified client reviews and testimonials about M. Kashif Sultan\'s Data Science, Machine Learning, and AI consulting services. See real feedback from satisfied clients.',
+  keywords: ['client reviews', 'testimonials', 'data science services', 'machine learning consulting', 'verified reviews'],
+  openGraph: {
+    title: 'Client Reviews - DataSciByKashi',
+    description: 'Verified client testimonials and reviews for Data Science and Machine Learning services.',
+    type: 'website',
+    url: 'https://datascibykashi.vercel.app/reviews',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Client Reviews and Testimonials',
+      },
+    ],
+  },
 };
 
 // Add structured data for reviews
