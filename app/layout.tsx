@@ -8,17 +8,18 @@ import { FloatingContact } from '@/components/ui/FloatingContact';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'M. Kashif Sultan | Data Scientist & ML Engineer',
+  title: 'DataSciByKashi | Data Scientist & ML Engineer',
   description: 'Professional Data Science portfolio showcasing machine learning projects, interactive dashboards, and predictive analytics services. Transforming data into actionable insights.',
   keywords: ['Data Science', 'Machine Learning', 'Python', 'Streamlit', 'Data Analysis', 'Kashif Sultan'],
   authors: [{ name: 'M. Kashif Sultan' }],
   creator: 'M. Kashif Sultan',
+  icon: '/favicon.png',
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: 'https://datascibykashi.vercel.app',
     siteName: 'Kashif Sultan Portfolio',
-    title: 'M. Kashif Sultan | Data Scientist & ML Engineer',
+    title: 'DataSciByKashi | Data Scientist & ML Engineer',
     description: 'Transforming data into actionable insights through AI, Machine Learning, and Interactive Dashboards.',
     images: [
       {
@@ -31,7 +32,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'M. Kashif Sultan | Data Scientist & ML Engineer',
+    title: 'DataSciByKashi | Data Scientist & ML Engineer',
     description: 'Transforming data into actionable insights through AI, Machine Learning, and Interactive Dashboards.',
     images: ['/og-image.jpg'],
   },
@@ -61,8 +62,8 @@ export default function RootLayout({
       <head>
         <meta name="google-site-verification" content="tvf3CoI7JuDuugYc8jxsZTHVdFUpFip6gt25iOUbZ7E" />
         <title>DataSciByKashi | Muhammad Kashif Sultan - Data Scientist</title>
-      <meta name="description" content="Portfolio of Muhammad Kashif Sultan showcasing Data Science, Machine Learning, and AI projects." />
-
+        <meta name="description" content="Portfolio of Muhammad Kashif Sultan showcasing Data Science, Machine Learning, and AI projects." />
+        <link rel="icon" href="/favicon.png" type="image/png" />
       </head>
       <body className={inter.className}>
         <div className="flex flex-col min-h-screen">

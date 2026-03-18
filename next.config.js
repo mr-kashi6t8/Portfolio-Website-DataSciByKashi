@@ -2,12 +2,22 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['localhost'],
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+      },
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
     unoptimized: process.env.NODE_ENV === 'development',
   },
-  // Enable React Server Components
   experimental: {
-    serverActions: true,
+    serverActions: {
+      allowedOrigins: ['localhost', 'localhost:3000'],
+    },
   },
 }
 

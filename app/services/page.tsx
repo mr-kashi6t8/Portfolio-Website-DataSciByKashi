@@ -87,11 +87,11 @@ export default function ServicesPage() {
 
           {/* Optional TikTok Highlights */}
           <Card hover className="p-6 flex flex-col items-center">
-            <div className="text-4xl font-bold gradient-text mb-2">1.49M</div>
+            <div className="text-4xl font-bold gradient-text mb-2">2.50M</div>
             <p className="text-slate-600 dark:text-slate-400 mb-4 text-center">
               Total Views
             </p>
-            <div className="text-4xl font-bold gradient-text mb-2">12.1K</div>
+            <div className="text-4xl font-bold gradient-text mb-2">16.7K</div>
             <p className="text-slate-600 dark:text-slate-400 mb-4 text-center">
               Followers
             </p>

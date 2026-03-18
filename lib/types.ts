@@ -106,6 +106,32 @@ export interface Testimonial {
   date: string;
 }
 
+export interface Certification {
+  id: string;
+  title: string;
+  issuer: string;
+  issueDate: string;
+  expiryDate?: string;
+  credentialId?: string;
+  credentialUrl?: string;
+  certificateImage: string;
+  description?: string;
+  featured?: boolean;
+}
+
+export interface ClientReview {
+  id: string;
+  name: string;
+  email: string;
+  company?: string;
+  role?: string;
+  content: string;
+  rating: number;
+  approved: boolean;
+  submittedDate: string;
+  approvedDate?: string;
+}
+
 export interface ContactFormData {
   name: string;
   email: string;

@@ -3,6 +3,7 @@
 import React from 'react';
 import { Hero } from '@/components/home/Hero';
 import { Stats } from '@/components/home/Stats';
+import { Reviews } from '@/components/home/Reviews';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
 import { ArrowRight } from 'lucide-react';
@@ -91,6 +92,9 @@ export default function HomePage() {
           </motion.div>
         </div>
       </section>
+
+      {/* Reviews Teaser */}
+      <Reviews />
 
       {/* CTA Section */}
       <section className="section-padding">

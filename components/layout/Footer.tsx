@@ -7,6 +7,8 @@ const footerLinks = {
     { label: 'About', href: '/about' },
     { label: 'Services', href: '/services' },
     { label: 'Portfolio', href: '/portfolio' },
+    { label: 'Certifications', href: '/certifications' },
+    { label: 'Reviews', href: '/reviews' },
     { label: 'Blog', href: '/blog' },
   ],
   services: [
@@ -38,9 +40,11 @@ export const Footer: React.FC = () => {
           {/* Brand Section */}
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center text-white font-bold text-xl">
-                K
-              </div>
+              <img
+                src="/images/WhatsApp Image 2026-02-10 at 11.42.51 PM.jpeg"
+                alt="M. Kashif Sultan"
+                className="w-10 h-10 rounded-lg object-cover shadow-md"
+              />
               <div>
                 <div className="text-lg font-bold text-slate-900 dark:text-white">
                   M. Kashif Sultan
