@@ -154,9 +154,8 @@ export default function CertificationsPage() {
       <section className="section-padding">
         <div className="container-custom">
           <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
+            initial="visible"
+            animate="visible"
             variants={fadeIn}
             className="mb-12"
           >
@@ -166,9 +165,8 @@ export default function CertificationsPage() {
           </motion.div>
 
           <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
+            initial="visible"
+            animate="visible"
             variants={staggerContainer}
             className="space-y-4"
           >
