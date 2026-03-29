@@ -6,10 +6,15 @@ let db: admin.firestore.Firestore;
 if (typeof process !== 'undefined' && process.env.FIREBASE_PROJECT_ID) {
   if (!admin.apps.length) {
     try {
-      admin.initializeApp({
+      const credential = admin.credential.cert({
         projectId: process.env.FIREBASE_PROJECT_ID,
         privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
         clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      } as admin.ServiceAccount);
+
+      admin.initializeApp({
+        credential,
+        projectId: process.env.FIREBASE_PROJECT_ID,
       });
     } catch (error) {
       console.error('Firebase initialization error:', error);
