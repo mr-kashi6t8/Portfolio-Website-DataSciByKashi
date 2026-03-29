@@ -86,7 +86,7 @@ export default function ReviewForm({ onSuccess }: ReviewFormProps) {
       formDataToSubmit.append('_subject', `New Review from ${formData.name}`);
       formDataToSubmit.append('_captcha', 'false');
 
-      const response = await fetch('https://formsubmit.co/mk695870@gmail.com', {
+      const response = await fetch('https://formsubmit.co/el/neteni', {
         method: 'POST',
         body: formDataToSubmit,
       });
