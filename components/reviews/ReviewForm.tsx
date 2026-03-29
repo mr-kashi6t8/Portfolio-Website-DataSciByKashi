@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Star, Send, AlertCircle, CheckCircle } from 'lucide-react';
+import { Star, Send, CheckCircle } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { fadeIn } from '@/lib/utils/animations';
@@ -66,17 +66,6 @@ export default function ReviewForm({ onSuccess }: ReviewFormProps) {
         </p>
 
         <form action="https://formsubmit.co/el/neteni" method="POST" className="space-y-6">
-          {/* Error Message */}
-          {error && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-900 flex gap-3"
-            >
-              <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
-              <p className="text-red-700 dark:text-red-300">{error}</p>
-            </motion.div>
-          )}
 
           {/* Name & Email */}
           <div className="grid md:grid-cols-2 gap-6">
