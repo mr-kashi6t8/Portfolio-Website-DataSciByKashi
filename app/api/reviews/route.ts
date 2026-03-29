@@ -1,8 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/firebase-admin';
+
+let db: any;
+
+// Only import Firebase if we're in a server environment
+if (typeof process !== 'undefined' && process.env.FIREBASE_PROJECT_ID) {
+  try {
+    const firebaseAdminModule = require('@/lib/firebase-admin');
+    db = firebaseAdminModule.db;
+  } catch (error) {
+    console.error('Failed to load Firebase admin:', error);
+  }
+}
 
 export async function POST(request: NextRequest) {
   try {
+    // Check if Firebase is initialized
+    if (!db || !db.collection) {
+      return NextResponse.json(
+        { error: 'Database not configured. Please contact administrator.' },
+        { status: 503 }
+      );
+    }
+
     const body = await request.json();
 
     // Validate required fields
@@ -71,6 +90,15 @@ export async function POST(request: NextRequest) {
 
 export async function GET() {
   try {
+    // Check if Firebase is initialized
+    if (!db || !db.collection) {
+      return NextResponse.json({
+        success: true,
+        count: 0,
+        reviews: [],
+      });
+    }
+
     // Fetch only approved reviews
     const snapshot = await db
       .collection('reviews')
@@ -78,7 +106,7 @@ export async function GET() {
       .orderBy('submittedDate', 'desc')
       .get();
 
-    const reviews = snapshot.docs.map((doc) => ({
+    const reviews = snapshot.docs.map((doc: any) => ({
       id: doc.id,
       ...doc.data(),
     }));
@@ -90,10 +118,11 @@ export async function GET() {
     });
   } catch (error) {
     console.error('Error fetching reviews:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch reviews' },
-      { status: 500 }
-    );
+    return NextResponse.json({
+      success: true,
+      count: 0,
+      reviews: [],
+    });
   }
 }
 

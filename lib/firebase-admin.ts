@@ -1,11 +1,24 @@
 import admin from 'firebase-admin';
 
-if (!admin.apps.length) {
-  admin.initializeApp({
-    projectId: process.env.FIREBASE_PROJECT_ID,
-    privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-  });
+let db: admin.firestore.Firestore;
+
+// Only initialize Firebase if running in Node.js environment with required env vars
+if (typeof process !== 'undefined' && process.env.FIREBASE_PROJECT_ID) {
+  if (!admin.apps.length) {
+    try {
+      admin.initializeApp({
+        projectId: process.env.FIREBASE_PROJECT_ID,
+        privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+        clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      });
+    } catch (error) {
+      console.error('Firebase initialization error:', error);
+    }
+  }
+  db = admin.firestore();
+} else {
+  // Fallback - return a mock database object if not initialized
+  db = {} as admin.firestore.Firestore;
 }
 
-export const db = admin.firestore();
+export { db };
