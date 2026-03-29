@@ -41,18 +41,21 @@ export default function ReviewForm({ onSuccess }: ReviewFormProps) {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
+    setLoading(true);
 
     // Validation
     if (!formData.name.trim()) {
       setError('Please enter your name');
+      setLoading(false);
       return;
     }
 
     if (!formData.email.trim()) {
       setError('Please enter your email');
+      setLoading(false);
       return;
     }
 
@@ -60,47 +63,35 @@ export default function ReviewForm({ onSuccess }: ReviewFormProps) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
       setError('Please enter a valid email address');
+      setLoading(false);
       return;
     }
 
     if (!formData.content.trim() || formData.content.trim().length < 10) {
       setError('Please write a review with at least 10 characters');
+      setLoading(false);
       return;
     }
 
-    // Submit form directly to FormSubmit using HTML form submission
-    setLoading(true);
-    const form = e.currentTarget;
+    try {
+      // Create FormData object
+      const formDataToSend = new FormData();
+      formDataToSend.append('name', formData.name);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('company', formData.company || '(Not provided)');
+      formDataToSend.append('role', formData.role || '(Not provided)');
+      formDataToSend.append('rating', formData.rating.toString());
+      formDataToSend.append('message', formData.content);
+      formDataToSend.append('_subject', `New Review from ${formData.name}`);
+      formDataToSend.append('_captcha', 'false');
 
-    // Create a hidden form for FormSubmit submission
-    const hiddenForm = document.createElement('form');
-    hiddenForm.method = 'POST';
-    hiddenForm.action = 'https://formsubmit.co/el/neteni';
+      // Submit to FormSubmit using direct POST
+      const response = await fetch('https://formsubmit.co/el/neteni', {
+        method: 'POST',
+        body: formDataToSend,
+      });
 
-    // Add fields
-    const fields = {
-      name: formData.name,
-      email: formData.email,
-      company: formData.company || '(Not provided)',
-      role: formData.role || '(Not provided)',
-      rating: formData.rating.toString(),
-      message: formData.content,
-      _subject: `New Review from ${formData.name}`,
-      _captcha: 'false',
-    };
-
-    Object.entries(fields).forEach(([key, value]) => {
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = key;
-      input.value = value;
-      hiddenForm.appendChild(input);
-    });
-
-    document.body.appendChild(hiddenForm);
-
-    // Submit and handle response
-    setTimeout(() => {
+      // FormSubmit redirects on success, so if we get here without an error, it worked
       setSuccess(true);
       setFormData({
         name: '',
@@ -111,17 +102,18 @@ export default function ReviewForm({ onSuccess }: ReviewFormProps) {
         rating: 5,
       });
 
+      // Call onSuccess callback if provided
       if (onSuccess) {
         setTimeout(() => {
           onSuccess();
         }, 2000);
       }
-
+    } catch (err) {
+      console.error('Review submission error:', err);
+      setError('Failed to submit review. Please try again or check the console for details.');
+    } finally {
       setLoading(false);
-      document.body.removeChild(hiddenForm);
-    }, 500);
-
-    hiddenForm.submit();
+    }
   };
 
   if (success) {
