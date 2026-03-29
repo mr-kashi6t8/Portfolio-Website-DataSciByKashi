@@ -1,23 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-let db: any;
-
-// Only import Firebase if we're in a server environment
-if (typeof process !== 'undefined' && process.env.FIREBASE_PROJECT_ID) {
-  try {
-    const firebaseAdminModule = require('@/lib/firebase-admin');
-    db = firebaseAdminModule.db;
-  } catch (error) {
-    console.error('Failed to load Firebase admin:', error);
-  }
-}
+import { db } from '@/lib/firebase-admin';
 
 export async function POST(request: NextRequest) {
   try {
     // Check if Firebase is initialized
-    if (!db || !db.collection) {
+    if (!db) {
+      console.error('Firebase DB is not initialized');
       return NextResponse.json(
-        { error: 'Database not configured. Please contact administrator.' },
+        { error: 'Database not configured. Firebase environment variables may not be set.' },
+        { status: 503 }
+      );
+    }
+
+    if (typeof db !== 'object' || !db.collection) {
+      console.error('Firebase DB object is invalid');
+      return NextResponse.json(
+        { error: 'Database configuration error.' },
         { status: 503 }
       );
     }
@@ -71,6 +69,8 @@ export async function POST(request: NextRequest) {
 
     const docRef = await db.collection('reviews').add(reviewData);
 
+    console.log('Review submitted successfully:', docRef.id);
+
     return NextResponse.json(
       {
         success: true,
@@ -92,6 +92,7 @@ export async function GET() {
   try {
     // Check if Firebase is initialized
     if (!db || !db.collection) {
+      console.warn('Firebase not available for GET request');
       return NextResponse.json({
         success: true,
         count: 0,
