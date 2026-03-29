@@ -67,6 +67,7 @@ export async function POST(request: NextRequest) {
       submittedDate: new Date().toISOString(),
     };
 
+    console.log('Attempting to add review to Firestore collection...');
     const docRef = await db.collection('reviews').add(reviewData);
 
     console.log('Review submitted successfully:', docRef.id);
@@ -80,7 +81,9 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
-    console.error('Error processing review submission:', error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error('Error processing review submission - Full error:', errorMessage);
+    console.error('Error details:', error);
     return NextResponse.json(
       { error: 'Failed to submit review. Please try again later.' },
       { status: 500 }
