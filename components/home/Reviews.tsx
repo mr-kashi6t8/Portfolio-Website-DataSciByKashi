@@ -5,11 +5,30 @@ import { motion } from 'framer-motion';
 import { Star, MessageSquare, ArrowRight } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
-import { getApprovedReviews } from '@/lib/data/reviews';
 import { fadeIn, staggerContainer, staggerItem } from '@/lib/utils/animations';
 
+// Fallback reviews for the homepage section
+const HOMEPAGE_REVIEWS = [
+  {
+    id: 'review-001',
+    name: 'Ali Hamza',
+    company: 'AKH Developers',
+    role: 'CEO',
+    content: 'Excellent service! The data analysis project was completed on time and exceeded our expectations.',
+    rating: 5,
+  },
+  {
+    id: 'review-1773844629389',
+    name: 'Alisha Nadeem',
+    company: 'DataSciByKashi',
+    role: 'Co Founder',
+    content: 'Working with Kashif was an excellent experience. He demonstrated strong expertise in data science and delivered exceptional results.',
+    rating: 5,
+  },
+];
+
 export const Reviews: React.FC = () => {
-  const reviews = getApprovedReviews().slice(0, 3); // Show only first 3 reviews
+  const reviews = HOMEPAGE_REVIEWS.slice(0, 3); // Show only first 3 reviews
 
   const renderStars = (rating: number) => {
     return (
