@@ -1,38 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { ClientReview } from '@/lib/types';
-import fs from 'fs/promises';
-import path from 'path';
-
-// Path to the pending reviews JSON file
-const PENDING_REVIEWS_PATH = path.join(process.cwd(), 'public/data/pending-reviews.json');
-
-// Helper function to read pending reviews from file
-async function readPendingReviews(): Promise<ClientReview[]> {
-  try {
-    const data = await fs.readFile(PENDING_REVIEWS_PATH, 'utf-8');
-    return JSON.parse(data);
-  } catch (error) {
-    // File doesn't exist yet, return empty array
-    return [];
-  }
-}
-
-// Helper function to write pending reviews to file
-async function writePendingReviews(reviews: ClientReview[]): Promise<void> {
-  try {
-    await fs.writeFile(PENDING_REVIEWS_PATH, JSON.stringify(reviews, null, 2), 'utf-8');
-  } catch (error) {
-    console.error('Error writing pending reviews:', error);
-    throw error;
-  }
-}
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
     // Validate required fields
-    if (!body.name || !body.email || !body.content || !body.rating) {
+    if (!body.name || !body.email || !body.message || !body.rating) {
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
@@ -49,7 +22,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate review content length
-    if (body.content.trim().length < 10) {
+    if (body.message.trim().length < 10) {
       return NextResponse.json(
         { error: 'Review must be at least 10 characters long' },
         { status: 400 }
@@ -64,33 +37,35 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create new review object
-    const newReview: ClientReview = {
-      id: `review-${Date.now()}`,
-      name: body.name.trim(),
-      email: body.email.trim(),
-      company: body.company?.trim() || undefined,
-      role: body.role?.trim() || undefined,
-      content: body.content.trim(),
-      rating: body.rating,
-      approved: false,
-      submittedDate: new Date().toISOString().split('T')[0],
-    };
+    // Create FormData to submit to FormSubmit.co
+    const formData = new FormData();
+    formData.append('name', body.name.trim());
+    formData.append('email', body.email.trim());
+    formData.append('company', body.company?.trim() || '(Not provided)');
+    formData.append('role', body.role?.trim() || '(Not provided)');
+    formData.append('rating', body.rating.toString());
+    formData.append('message', body.message.trim());
+    formData.append('_subject', `New Review from ${body.name}`);
+    formData.append('_captcha', 'false');
 
-    // Read existing pending reviews
-    const pendingReviews = await readPendingReviews();
+    // Submit to FormSubmit.co from server-side
+    const formSubmitResponse = await fetch('https://formsubmit.co/el/neteni', {
+      method: 'POST',
+      body: formData,
+    });
 
-    // Add new review
-    pendingReviews.push(newReview);
-
-    // Write back to file
-    await writePendingReviews(pendingReviews);
+    if (!formSubmitResponse.ok) {
+      console.error('FormSubmit error:', formSubmitResponse.status, await formSubmitResponse.text());
+      return NextResponse.json(
+        { error: 'Failed to submit review' },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json(
       {
         success: true,
-        message: 'Review submitted successfully! It will appear after approval.',
-        data: { reviewId: newReview.id },
+        message: 'Review submitted successfully!',
       },
       { status: 201 }
     );
@@ -98,22 +73,6 @@ export async function POST(request: NextRequest) {
     console.error('Error processing review submission:', error);
     return NextResponse.json(
       { error: 'Failed to submit review. Please try again later.' },
-      { status: 500 }
-    );
-  }
-}
-
-export async function GET() {
-  try {
-    const pendingReviews = await readPendingReviews();
-    return NextResponse.json({
-      message: 'Pending reviews',
-      pendingCount: pendingReviews.length,
-      reviews: pendingReviews,
-    });
-  } catch (error) {
-    return NextResponse.json(
-      { error: 'Failed to fetch pending reviews' },
       { status: 500 }
     );
   }
