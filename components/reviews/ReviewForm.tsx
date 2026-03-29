@@ -74,18 +74,25 @@ export default function ReviewForm({ onSuccess }: ReviewFormProps) {
     }
 
     try {
-      const response = await fetch('/api/reviews', {
+      // Submit to FormSubmit.co
+      const formDataToSubmit = new FormData();
+      formDataToSubmit.append('name', formData.name);
+      formDataToSubmit.append('email', formData.email);
+      formDataToSubmit.append('company', formData.company || '(Not provided)');
+      formDataToSubmit.append('role', formData.role || '(Not provided)');
+      formDataToSubmit.append('rating', formData.rating.toString());
+      formDataToSubmit.append('message', formData.content);
+      // FormSubmit requires these fields for proper functioning
+      formDataToSubmit.append('_subject', `New Review from ${formData.name}`);
+      formDataToSubmit.append('_captcha', 'false');
+
+      const response = await fetch('https://formsubmit.co/mk695870@gmail.com', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+        body: formDataToSubmit,
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to submit review');
+        throw new Error('Failed to submit review');
       }
 
       setSuccess(true);
@@ -130,7 +137,7 @@ export default function ReviewForm({ onSuccess }: ReviewFormProps) {
             Thank You!
           </h3>
           <p className="text-slate-600 dark:text-slate-400 mb-6">
-            Your review has been submitted successfully. It will appear on this page once it's approved by the site administrator.
+            Your review has been submitted successfully! The site administrator will review it and add it to the page shortly.
           </p>
           <Button onClick={() => window.location.reload()} variant="primary">
             Return to Reviews
