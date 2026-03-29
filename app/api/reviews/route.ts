@@ -37,21 +37,24 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create FormData to submit to FormSubmit.co
-    const formData = new FormData();
-    formData.append('name', body.name.trim());
-    formData.append('email', body.email.trim());
-    formData.append('company', body.company?.trim() || '(Not provided)');
-    formData.append('role', body.role?.trim() || '(Not provided)');
-    formData.append('rating', body.rating.toString());
-    formData.append('message', body.message.trim());
-    formData.append('_subject', `New Review from ${body.name}`);
-    formData.append('_captcha', 'false');
+    // Create URL-encoded form data for FormSubmit.co
+    const params = new URLSearchParams();
+    params.append('name', body.name.trim());
+    params.append('email', body.email.trim());
+    params.append('company', body.company?.trim() || '(Not provided)');
+    params.append('role', body.role?.trim() || '(Not provided)');
+    params.append('rating', body.rating.toString());
+    params.append('message', body.message.trim());
+    params.append('_subject', `New Review from ${body.name}`);
+    params.append('_captcha', 'false');
 
     // Submit to FormSubmit.co from server-side
     const formSubmitResponse = await fetch('https://formsubmit.co/el/neteni', {
       method: 'POST',
-      body: formData,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: params.toString(),
     });
 
     if (!formSubmitResponse.ok) {
