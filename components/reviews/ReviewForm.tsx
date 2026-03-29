@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Star, Send, AlertCircle, CheckCircle } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
@@ -12,109 +12,15 @@ interface ReviewFormProps {
 }
 
 export default function ReviewForm({ onSuccess }: ReviewFormProps) {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    company: '',
-    role: '',
-    content: '',
-    rating: 5,
-  });
-
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-    setError('');
-  };
-
-  const handleRatingChange = (rating: number) => {
-    setFormData((prev) => ({
-      ...prev,
-      rating,
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError('');
-    setLoading(true);
-
-    // Validation
-    if (!formData.name.trim()) {
-      setError('Please enter your name');
-      setLoading(false);
-      return;
-    }
-
-    if (!formData.email.trim()) {
-      setError('Please enter your email');
-      setLoading(false);
-      return;
-    }
-
-    // Basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      setError('Please enter a valid email address');
-      setLoading(false);
-      return;
-    }
-
-    if (!formData.content.trim() || formData.content.trim().length < 10) {
-      setError('Please write a review with at least 10 characters');
-      setLoading(false);
-      return;
-    }
-
-    try {
-      // Create FormData object
-      const formDataToSend = new FormData();
-      formDataToSend.append('name', formData.name);
-      formDataToSend.append('email', formData.email);
-      formDataToSend.append('company', formData.company || '(Not provided)');
-      formDataToSend.append('role', formData.role || '(Not provided)');
-      formDataToSend.append('rating', formData.rating.toString());
-      formDataToSend.append('message', formData.content);
-      formDataToSend.append('_subject', `New Review from ${formData.name}`);
-      formDataToSend.append('_captcha', 'false');
-
-      // Submit to FormSubmit using direct POST
-      const response = await fetch('https://formsubmit.co/el/neteni', {
-        method: 'POST',
-        body: formDataToSend,
-      });
-
-      // FormSubmit redirects on success, so if we get here without an error, it worked
+  React.useEffect(() => {
+    // Check if we were redirected back from FormSubmit with success
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('submitted') === 'true') {
       setSuccess(true);
-      setFormData({
-        name: '',
-        email: '',
-        company: '',
-        role: '',
-        content: '',
-        rating: 5,
-      });
-
-      // Call onSuccess callback if provided
-      if (onSuccess) {
-        setTimeout(() => {
-          onSuccess();
-        }, 2000);
-      }
-    } catch (err) {
-      console.error('Review submission error:', err);
-      setError('Failed to submit review. Please try again or check the console for details.');
-    } finally {
-      setLoading(false);
     }
-  };
+  }, []);
 
   if (success) {
     return (
@@ -159,7 +65,7 @@ export default function ReviewForm({ onSuccess }: ReviewFormProps) {
           Help others by sharing your experience working with me. Your review will be published after approval.
         </p>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form action="https://formsubmit.co/el/neteni" method="POST" className="space-y-6">
           {/* Error Message */}
           {error && (
             <motion.div
@@ -181,11 +87,9 @@ export default function ReviewForm({ onSuccess }: ReviewFormProps) {
               <input
                 type="text"
                 name="name"
-                value={formData.name}
-                onChange={handleInputChange}
                 placeholder="John Doe"
+                required
                 className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
-                disabled={loading}
               />
             </div>
             <div>
@@ -195,11 +99,9 @@ export default function ReviewForm({ onSuccess }: ReviewFormProps) {
               <input
                 type="email"
                 name="email"
-                value={formData.email}
-                onChange={handleInputChange}
                 placeholder="john@example.com"
+                required
                 className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
-                disabled={loading}
               />
             </div>
           </div>
@@ -213,11 +115,8 @@ export default function ReviewForm({ onSuccess }: ReviewFormProps) {
               <input
                 type="text"
                 name="company"
-                value={formData.company}
-                onChange={handleInputChange}
                 placeholder="Acme Inc"
                 className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
-                disabled={loading}
               />
             </div>
             <div>
@@ -227,11 +126,8 @@ export default function ReviewForm({ onSuccess }: ReviewFormProps) {
               <input
                 type="text"
                 name="role"
-                value={formData.role}
-                onChange={handleInputChange}
                 placeholder="Project Manager"
                 className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
-                disabled={loading}
               />
             </div>
           </div>
@@ -243,21 +139,22 @@ export default function ReviewForm({ onSuccess }: ReviewFormProps) {
             </label>
             <div className="flex gap-2">
               {[1, 2, 3, 4, 5].map((star) => (
-                <button
-                  key={star}
-                  type="button"
-                  onClick={() => handleRatingChange(star)}
-                  disabled={loading}
-                  className="focus:outline-none transition-transform hover:scale-110"
-                >
+                <label key={star} className="cursor-pointer">
+                  <input
+                    type="radio"
+                    name="rating"
+                    value={star}
+                    defaultChecked={star === 5}
+                    className="hidden"
+                  />
                   <Star
-                    className={`w-8 h-8 ${
-                      star <= formData.rating
+                    className={`w-8 h-8 transition-transform hover:scale-110 ${
+                      star <= 5
                         ? 'fill-yellow-400 text-yellow-400'
                         : 'text-slate-300 dark:text-slate-600'
                     }`}
                   />
-                </button>
+                </label>
               ))}
             </div>
           </div>
@@ -268,18 +165,22 @@ export default function ReviewForm({ onSuccess }: ReviewFormProps) {
               Your Review *
             </label>
             <textarea
-              name="content"
-              value={formData.content}
-              onChange={handleInputChange}
+              name="message"
               placeholder="Share your experience working with me. What was the project about? How did I help? Any specific accomplishments?"
               rows={5}
+              required
+              minLength={10}
               className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500 resize-none"
-              disabled={loading}
             />
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
               Minimum 10 characters required
             </p>
           </div>
+
+          {/* Hidden FormSubmit fields */}
+          <input type="hidden" name="_subject" value="New Review submitted on your portfolio" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_next" value="https://datascibykashi.vercel.app/reviews?submitted=true" />
 
           {/* Submit Button */}
           <Button
@@ -287,10 +188,9 @@ export default function ReviewForm({ onSuccess }: ReviewFormProps) {
             variant="primary"
             size="lg"
             icon={Send}
-            disabled={loading}
             className="w-full"
           >
-            {loading ? 'Submitting...' : 'Submit Review'}
+            Submit Review
           </Button>
         </form>
 
