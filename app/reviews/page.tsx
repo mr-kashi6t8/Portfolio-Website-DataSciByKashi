@@ -1,18 +1,49 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Star, Send } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
-import { getApprovedReviews } from '@/lib/data/reviews';
 import { fadeIn, staggerContainer, staggerItem } from '@/lib/utils/animations';
 import ReviewForm from '@/components/reviews/ReviewForm';
+import type { ClientReview } from '@/lib/types';
 
 export default function ReviewsPage() {
-  const approvedReviews = getApprovedReviews();
+  const [approvedReviews, setApprovedReviews] = useState<ClientReview[]>([]);
+  const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await fetch('/api/reviews');
+        if (response.ok) {
+          const data = await response.json();
+          const reviews = (data.reviews || []).map((review: any) => ({
+            id: review.id,
+            name: review.name,
+            email: review.email,
+            company: review.company || '',
+            role: review.role || '',
+            content: review.message, // Map 'message' from API to 'content'
+            rating: review.rating,
+            approved: review.approved,
+            submittedDate: review.submittedDate.split('T')[0],
+            approvedDate: review.submittedDate.split('T')[0],
+          }));
+          setApprovedReviews(reviews);
+        }
+      } catch (error) {
+        console.error('Error fetching reviews:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchReviews();
+  }, []);
 
   const renderStars = (rating: number) => {
     return (
