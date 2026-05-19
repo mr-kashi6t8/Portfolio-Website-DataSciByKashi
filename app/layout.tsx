@@ -64,6 +64,7 @@ export default function RootLayout({
         <title>DataSciByKashi | Muhammad Kashif Sultan - Data Scientist</title>
         <meta name="description" content="Portfolio of Muhammad Kashif Sultan showcasing Data Science, Machine Learning, and AI projects." />
         <link rel="icon" href="/favicon.png" type="image/png" />
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9837927121716523" crossorigin="anonymous"></script>
       </head>
       <body className={inter.className}>
         <div className="flex flex-col min-h-screen">
