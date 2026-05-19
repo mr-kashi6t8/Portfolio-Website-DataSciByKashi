@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Script from 'next/script';
 import { Inter } from 'next/font/google';
 import '@/styles/globals.css';
 import { Header } from '@/components/layout/Header';
@@ -61,12 +60,6 @@ export default function RootLayout({
   return (
     <html lang="en" className="smooth-scroll">
       <body className={inter.className}>
-        <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9837927121716523"
-          crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
         <div className="flex flex-col min-h-screen">
           <Header />
           <main className="flex-grow pt-20">{children}</main>
