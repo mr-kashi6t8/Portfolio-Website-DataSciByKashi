@@ -8,7 +8,9 @@ import { Button } from '@/components/ui/Button';
 import { fadeIn, staggerContainer, staggerItem } from '@/lib/utils/animations';
 import type { ClientReview } from '@/lib/types';
 
-const HOMEPAGE_REVIEWS: Array<Pick<ClientReview, 'id' | 'name' | 'company' | 'role' | 'content' | 'rating'>> = [
+type ReviewPreview = Pick<ClientReview, 'id' | 'name' | 'company' | 'role' | 'content' | 'rating'>;
+
+const HOMEPAGE_REVIEWS: ReviewPreview[] = [
   {
     id: 'review-001',
     name: 'Ali Hamza',
@@ -28,7 +30,7 @@ const HOMEPAGE_REVIEWS: Array<Pick<ClientReview, 'id' | 'name' | 'company' | 'ro
 ];
 
 export const Reviews: React.FC = () => {
-  const [reviews, setReviews] = useState<HOMEPAGE_REVIEWS[0][]>(HOMEPAGE_REVIEWS);
+  const [reviews, setReviews] = useState<ReviewPreview[]>(HOMEPAGE_REVIEWS);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
