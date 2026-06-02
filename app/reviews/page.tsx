@@ -9,31 +9,38 @@ import { Badge } from '@/components/ui/Badge';
 import { fadeIn, staggerContainer, staggerItem } from '@/lib/utils/animations';
 import ReviewForm from '@/components/reviews/ReviewForm';
 import type { ClientReview } from '@/lib/types';
+import { getApprovedReviews } from '@/lib/data/reviews';
 
 export default function ReviewsPage() {
-  const [approvedReviews, setApprovedReviews] = useState<ClientReview[]>([]);
+  const [approvedReviews, setApprovedReviews] = useState<ClientReview[]>(getApprovedReviews());
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
 
   const fetchReviews = async () => {
     try {
       const response = await fetch('/api/reviews');
-      if (response.ok) {
-        const data = await response.json();
-        const reviews = (data.reviews || []).map((review: any) => ({
-          id: review.id,
-          name: review.name,
-          email: review.email,
-          company: review.company || '',
-          role: review.role || '',
-          content: review.message, // Map 'message' from API to 'content'
-          rating: review.rating,
-          approved: review.approved,
-          submittedDate: review.submittedDate.split('T')[0],
-          approvedDate: review.approvedDate ? review.approvedDate.split('T')[0] : review.submittedDate.split('T')[0],
-        }));
-        setApprovedReviews(reviews);
-      }
+        if (response.ok) {
+          const data = await response.json();
+          const reviews = (data.reviews || []).map((review: any) => ({
+            id: review.id,
+            name: review.name,
+            email: review.email,
+            company: review.company || '',
+            role: review.role || '',
+            content: review.message, // Map 'message' from API to 'content'
+            rating: review.rating,
+            approved: review.approved,
+            submittedDate: review.submittedDate.split('T')[0],
+            approvedDate: review.approvedDate ? review.approvedDate.split('T')[0] : review.submittedDate.split('T')[0],
+          }));
+
+          // If API returned reviews use them; otherwise keep fallback reviews
+          if (reviews.length > 0) {
+            setApprovedReviews(reviews);
+          } else {
+            setApprovedReviews(getApprovedReviews());
+          }
+        }
     } catch (error) {
       console.error('Error fetching reviews:', error);
     } finally {
