@@ -131,7 +131,7 @@ export default function ReviewForm({ onSuccess }: ReviewFormProps) {
             Thank You!
           </h3>
           <p className="text-slate-600 dark:text-slate-400 mb-6">
-            Your review has been submitted successfully! The site administrator will review it and add it to the page shortly.
+            Your review has been submitted successfully and is now visible on the reviews page.
           </p>
           <Button onClick={() => window.location.reload()} variant="primary">
             Return to Reviews
@@ -152,7 +152,7 @@ export default function ReviewForm({ onSuccess }: ReviewFormProps) {
           Share Your Review
         </h3>
         <p className="text-slate-600 dark:text-slate-400 mb-6">
-          Help others by sharing your experience working with me. Your review will be published after approval.
+          Help others by sharing your experience working with me. Your review will be published immediately.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-6">

@@ -15,33 +15,33 @@ export default function ReviewsPage() {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
 
-  useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const response = await fetch('/api/reviews');
-        if (response.ok) {
-          const data = await response.json();
-          const reviews = (data.reviews || []).map((review: any) => ({
-            id: review.id,
-            name: review.name,
-            email: review.email,
-            company: review.company || '',
-            role: review.role || '',
-            content: review.message, // Map 'message' from API to 'content'
-            rating: review.rating,
-            approved: review.approved,
-            submittedDate: review.submittedDate.split('T')[0],
-            approvedDate: review.submittedDate.split('T')[0],
-          }));
-          setApprovedReviews(reviews);
-        }
-      } catch (error) {
-        console.error('Error fetching reviews:', error);
-      } finally {
-        setLoading(false);
+  const fetchReviews = async () => {
+    try {
+      const response = await fetch('/api/reviews');
+      if (response.ok) {
+        const data = await response.json();
+        const reviews = (data.reviews || []).map((review: any) => ({
+          id: review.id,
+          name: review.name,
+          email: review.email,
+          company: review.company || '',
+          role: review.role || '',
+          content: review.message, // Map 'message' from API to 'content'
+          rating: review.rating,
+          approved: review.approved,
+          submittedDate: review.submittedDate.split('T')[0],
+          approvedDate: review.approvedDate ? review.approvedDate.split('T')[0] : review.submittedDate.split('T')[0],
+        }));
+        setApprovedReviews(reviews);
       }
-    };
+    } catch (error) {
+      console.error('Error fetching reviews:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchReviews();
   }, []);
 
@@ -111,7 +111,12 @@ export default function ReviewsPage() {
                   ← Back to Reviews
                 </Button>
               </motion.div>
-              <ReviewForm onSuccess={() => setShowForm(false)} />
+              <ReviewForm
+                onSuccess={() => {
+                  setShowForm(false);
+                  fetchReviews();
+                }}
+              />
             </div>
           </div>
         </section>

@@ -63,8 +63,9 @@ export async function POST(request: NextRequest) {
       role: body.role?.trim() || '',
       message: body.message.trim(),
       rating: body.rating,
-      approved: false,
+      approved: true,
       submittedDate: new Date().toISOString(),
+      approvedDate: new Date().toISOString(),
     };
 
     console.log('Attempting to add review to Firestore collection...');
@@ -75,7 +76,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         success: true,
-        message: 'Review submitted successfully! It will appear after approval.',
+        message: 'Review submitted successfully and is now visible.',
         data: { reviewId: docRef.id },
       },
       { status: 201 }
