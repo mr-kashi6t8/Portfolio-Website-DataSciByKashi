@@ -16,6 +16,9 @@ export default function ReviewsPage() {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
 
+  // If Firestore returns no approved reviews, fall back to local reviews
+  const displayReviews = approvedReviews && approvedReviews.length > 0 ? approvedReviews : getApprovedReviews();
+
   const fetchReviews = async () => {
     try {
       const response = await fetch('/api/reviews');
@@ -145,7 +148,7 @@ export default function ReviewsPage() {
                   What Clients Say
                 </h2>
                 <p className="text-center text-slate-600 dark:text-slate-400">
-                  {approvedReviews.length} verified review{approvedReviews.length !== 1 ? 's' : ''}
+                  {displayReviews.length} verified review{displayReviews.length !== 1 ? 's' : ''}
                 </p>
               </motion.div>
 
@@ -155,7 +158,7 @@ export default function ReviewsPage() {
                 variants={staggerContainer}
                 className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
               >
-                {approvedReviews.map((review) => (
+                {displayReviews.map((review) => (
                   <motion.div key={review.id} variants={staggerItem}>
                     <Card hover className="p-6 h-full flex flex-col">
                       {/* Rating */}
