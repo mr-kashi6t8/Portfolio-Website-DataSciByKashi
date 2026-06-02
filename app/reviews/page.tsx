@@ -135,7 +135,7 @@ export default function ReviewsPage() {
       {/* Reviews Grid */}
       <section className={`section-padding ${showForm ? '' : ''}`}>
         <div className="container-custom">
-          {approvedReviews.length > 0 ? (
+          {displayReviews.length > 0 ? (
             <>
               <motion.div
                 initial="hidden"
