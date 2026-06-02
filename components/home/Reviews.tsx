@@ -1,14 +1,14 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Star, MessageSquare, ArrowRight } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { fadeIn, staggerContainer, staggerItem } from '@/lib/utils/animations';
+import type { ClientReview } from '@/lib/types';
 
-// Fallback reviews for the homepage section
-const HOMEPAGE_REVIEWS = [
+const HOMEPAGE_REVIEWS: Array<Pick<ClientReview, 'id' | 'name' | 'company' | 'role' | 'content' | 'rating'>> = [
   {
     id: 'review-001',
     name: 'Ali Hamza',
@@ -28,7 +28,41 @@ const HOMEPAGE_REVIEWS = [
 ];
 
 export const Reviews: React.FC = () => {
-  const reviews = HOMEPAGE_REVIEWS.slice(0, 3); // Show only first 3 reviews
+  const [reviews, setReviews] = useState<HOMEPAGE_REVIEWS[0][]>(HOMEPAGE_REVIEWS);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadReviews = async () => {
+      try {
+        const response = await fetch('/api/reviews');
+        if (!response.ok) {
+          throw new Error('Failed to load reviews');
+        }
+
+        const data = await response.json();
+        const fetchedReviews = (data.reviews || []).slice(0, 3).map((review: any) => ({
+          id: review.id,
+          name: review.name,
+          company: review.company || '',
+          role: review.role || '',
+          content: review.message,
+          rating: review.rating,
+        }));
+
+        if (fetchedReviews.length > 0) {
+          setReviews(fetchedReviews);
+        }
+      } catch (error) {
+        console.error('Error fetching homepage reviews:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadReviews();
+  }, []);
+
+  const visibleReviews = reviews.slice(0, 3);
 
   const renderStars = (rating: number) => {
     return (
@@ -63,7 +97,7 @@ export const Reviews: React.FC = () => {
           </p>
         </motion.div>
 
-        {reviews.length > 0 ? (
+        {visibleReviews.length > 0 ? (
           <>
             <motion.div
               initial="hidden"
@@ -72,7 +106,7 @@ export const Reviews: React.FC = () => {
               variants={staggerContainer}
               className="grid md:grid-cols-3 gap-8 mb-8"
             >
-              {reviews.map((review) => (
+              {visibleReviews.map((review) => (
                 <motion.div key={review.id} variants={staggerItem}>
                   <Card hover className="p-6 h-full flex flex-col">
                     {/* Rating */}
