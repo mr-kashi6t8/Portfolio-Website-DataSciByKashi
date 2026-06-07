@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Calendar, Clock, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
@@ -10,6 +11,37 @@ export async function generateStaticParams() {
   return blogPosts.map((post) => ({
     slug: post.slug,
   }));
+}
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const post = getPostBySlug(params.slug);
+
+  if (!post) {
+    return {
+      title: 'Article Not Found | DataSciByKashi',
+      description: 'The requested blog post could not be found.',
+    };
+  }
+
+  return {
+    title: `${post.title} | Data Science & AI Insights`,
+    description: post.excerpt,
+    keywords: [...post.tags, 'data science', 'AI', 'machine learning', 'automation', 'analytics'],
+    openGraph: {
+      title: `${post.title} | Data Science & AI Insights`,
+      description: post.excerpt,
+      type: 'article',
+      url: `https://datascibykashi.vercel.app/blog/${post.slug}`,
+      images: [
+        {
+          url: '/og-image.jpg',
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
+  };
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {

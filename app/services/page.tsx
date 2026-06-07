@@ -9,6 +9,7 @@ import { services, pricingTiers } from '@/lib/data/services';
 import { fadeIn, staggerContainer, staggerItem } from '@/lib/utils/animations';
 import * as Icons from 'lucide-react';
 
+
 export default function ServicesPage() {
   return (
     <div className="min-h-screen">
@@ -22,14 +23,17 @@ export default function ServicesPage() {
             className="max-w-4xl mx-auto text-center"
           >
             <motion.h1 variants={staggerItem} className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6">
-              <span className="gradient-text">Data Science Services</span> I Provide
+              AI, Automation & Data Science Services for Business Growth
             </motion.h1>
             <motion.p variants={staggerItem} className="text-xl text-slate-600 dark:text-slate-300 mb-6">
-              End-to-end, production-ready solutions tailored to your business needs analytics, ML models, dashboards, and more.
+              End-to-end AI, automation, and data science solutions tailored to your business needs: predictive modeling, dashboards, analytics pipelines, and scalable ML systems.
             </motion.p>
-            <motion.div variants={staggerItem}>
+            <motion.div variants={staggerItem} className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button href="/contact" variant="primary" size="lg">
                 Discuss Your Project
+              </Button>
+              <Button href="/portfolio" variant="outline" size="lg">
+                View Case Studies
               </Button>
             </motion.div>
           </motion.div>
@@ -215,7 +219,7 @@ export default function ServicesPage() {
                 How I <span className="gradient-text">Deliver</span>
               </h2>
               <p className="text-lg text-slate-600 dark:text-slate-300">
-                A structured, end-to-end process ensuring quality, clarity, and results.
+                A structured, end-to-end process ensuring quality, clarity, and results for every AI, machine learning, automation, and data science project.
               </p>
             </motion.div>
 

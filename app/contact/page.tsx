@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { fadeIn, staggerContainer, staggerItem } from '@/lib/utils/animations';
 
+
 export default function ContactPage() {
   const [formData, setFormData] = useState({
     name:  '',
@@ -67,7 +68,10 @@ export default function ContactPage() {
               Let's <span className="gradient-text">Work Together</span>
             </motion.h1>
             <motion.p variants={staggerItem} className="text-xl text-slate-600 dark:text-slate-300">
-              Have a project in mind? Let's discuss how I can help you achieve your data science goals
+              Have a project in mind? Let's discuss how I can help you achieve your AI, automation, data science, machine learning, or business intelligence goals.
+            </motion.p>
+            <motion.p variants={staggerItem} className="text-sm text-slate-500 dark:text-slate-400 mt-2">
+              Want to review services first? <a href="/services" className="text-primary-600 dark:text-primary-400 underline">See available AI and data science solutions</a>.
             </motion.p>
           </motion.div>
         </div>

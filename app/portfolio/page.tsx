@@ -11,6 +11,7 @@ import { projects, getProjectCategories } from '@/lib/data/projects';
 import { fadeIn, staggerContainer, staggerItem } from '@/lib/utils/animations';
 import { Project } from '@/lib/types';
 
+
 export default function PortfolioPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -36,7 +37,10 @@ export default function PortfolioPage() {
               My <span className="gradient-text">Portfolio</span>
             </motion.h1>
             <motion.p variants={staggerItem} className="text-xl text-slate-600 dark:text-slate-300">
-              Explore my data science projects, machine learning models, and interactive dashboards
+              Explore my AI, automation, machine learning, and data science projects built to solve real business challenges and deliver measurable results.
+            </motion.p>
+            <motion.p variants={staggerItem} className="text-sm text-slate-500 dark:text-slate-400 mt-2">
+              Want to see how these solutions can be applied to your business? <a href="/services" className="text-primary-600 dark:text-primary-400 underline">Explore services for data science and automation</a>.
             </motion.p>
           </motion.div>
         </div>
@@ -168,7 +172,7 @@ export default function PortfolioPage() {
             className="max-w-3xl mx-auto text-center"
           >
             <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">
-              Want a Similar Project?
+              Want a Similar AI or Data Science Project?
             </h2>
             <p className="text-lg text-slate-600 dark:text-slate-300 mb-8">
               I can build custom ML models, dashboards, and data science solutions tailored to your needs

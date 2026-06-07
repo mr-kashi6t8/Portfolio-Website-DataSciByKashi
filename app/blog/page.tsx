@@ -6,8 +6,10 @@ import Link from 'next/link';
 import { Calendar, Clock, Tag } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
+import { Button } from '@/components/ui/Button';
 import { blogPosts, getAllTags } from '@/lib/data/blog-posts';
 import { fadeIn, staggerContainer, staggerItem } from '@/lib/utils/animations';
+
 
 export default function BlogPage() {
   const [selectedTag, setSelectedTag] = useState<string>('All');
@@ -35,7 +37,7 @@ export default function BlogPage() {
               Data Science <span className="gradient-text">Insights</span>
             </motion.h1>
             <motion.p variants={staggerItem} className="text-xl text-slate-600 dark:text-slate-300">
-              Tutorials, tips, and insights on data science, machine learning, and Python
+              Tutorials, tips, and insights on data science, machine learning, AI, automation, and Python.
             </motion.p>
           </motion.div>
         </div>
@@ -64,6 +66,15 @@ export default function BlogPage() {
                 {tag}
               </button>
             ))}
+          </motion.div>
+
+          <motion.div variants={fadeIn} className="text-center mb-10">
+            <p className="text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
+              Browse expert-level content to learn how AI, automation, and predictive analytics can transform your business.
+            </p>
+            <Button href="/contact" variant="primary" size="lg" className="mt-6">
+              Talk About Your Project
+            </Button>
           </motion.div>
 
           {/* Blog Posts Grid */}

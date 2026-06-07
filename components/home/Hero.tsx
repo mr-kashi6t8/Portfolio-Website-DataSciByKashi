@@ -35,8 +35,7 @@ export const Hero: React.FC = () => {
             variants={staggerItem}
             className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-slate-900 dark:text-white"
           >
-            Transforming Data into{' '}
-            <span className="gradient-text">Actionable Insights</span>
+            AI, Data Science & Automation for Business Growth
           </motion.h1>
 
           {/* Subheading */}
@@ -44,15 +43,15 @@ export const Hero: React.FC = () => {
             variants={staggerItem}
             className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 mb-8 max-w-3xl mx-auto"
           >
-            I help businesses, startups, and researchers make data-driven decisions through{' '}
+            I help businesses, startups, and technology teams solve complex problems with{' '}
             <span className="font-semibold text-primary-600 dark:text-primary-400">
-              AI, Machine Learning , Deep Learning
-            </span>
-            , and{' '}
+              AI, machine learning, and automation
+            </span>{' '}
+            while building scalable{' '}
             <span className="font-semibold text-secondary-600 dark:text-secondary-400">
-              Interactive Dashboards
-            </span>
-            .
+              data science systems and interactive dashboards
+            </span>{' '}
+            that drive results.
           </motion.p>
 
           {/* CTA Buttons */}

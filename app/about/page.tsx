@@ -33,7 +33,7 @@ export default function AboutPage() {
               className="text-xl text-slate-600 dark:text-slate-300 mb-8"
             >
               I design data-driven solutions that turn complex datasets into clear insights,
-              scalable machine learning models, and decision-ready dashboards.
+              scalable machine learning models, AI automation systems, and decision-ready dashboards.
             </motion.p>
 
             <motion.div variants={staggerItem}>
@@ -64,16 +64,16 @@ export default function AboutPage() {
             <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">My Journey</h2>
             <div className="prose prose-lg dark:prose-invert max-w-none">
               <p className="text-slate-600 dark:text-slate-300 mb-4">
-                I'm <strong>M Kashif Sultan</strong>, a data science professional focused on transforming
+                I'm <strong>M Kashif Sultan</strong>, a data science and AI consulting professional focused on transforming
                 raw data into insights that drive smarter decisions. My work sits at the intersection
-                of <strong>data analysis, machine learning</strong>, and real-world problem solving,
+                of <strong>data analysis, machine learning, AI,</strong> and real-world problem solving,
                 helping clients and businesses unlock the true value of their data.
               </p>
 
               <p className="text-slate-600 dark:text-slate-300 mb-4">
-                Over the years, I've built projects spanning predictive modeling, sentiment analysis,
-                and interactive dashboards. I also share knowledge and practical tips on
-                <strong> TikTok</strong> to educate and inspire others about data science, Python,
+                Over the years, I've built projects spanning predictive modeling, automation workflows,
+                sentiment analysis, and interactive dashboards. I also share knowledge and practical tips on
+                <strong> TikTok</strong> to educate and inspire others about data science, AI, Python,
                 and machine learning best practices. <a href="https://www.tiktok.com/@datascibykashi?is_from_webapp=1&sender_device=pc" className="text-primary-600 dark:text-primary-400 underline">Follow my TikTok here</a>.
               </p>
 
